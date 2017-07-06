@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8" />
+<title>NEEDLE</title>
+<link rel="stylesheet" type="text/css" media="all" href="style.css" />
+</head>
+
+<body>
+<h1>NEEDLE Hifi Trace Dashboard</h1>
+
+<div>
+  <label for="fileselect">Files to upload:</label>
+  <input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
+<!  <input type="text" id="fileurl" name="fileurl" />
+<!  <button type="button" id="fileurlgo" > <!Load </button>
+  <div id="filedrag">or drop trace file here</div>
+</div>
+
+<div id="messages">
+<p></p>
+</div>
+<button>Reset</button>
+<style>
+  .barWrap{cursor: pointer;}
+  .barWrap:hover .bar{fill: cyan;
+    cursor: pointer;
+  }
+
+.toolTip {
+  position: absolute;
+  display: none;
+  min-width: 80px;
+  height: auto;
+  background: none repeat scroll 0 0 #ffffff;
+  border-radius: 2px;
+  border: 1px solid #000;
+  padding: 5px;
+  text-align: left;
+  font-size: 10px;
+}
+.zoom {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
+.value {
+  font-size: 16px;
+  font-weight: 300;
+  stroke-width: 1;
+  fill: black;
+}
+
+.text {
+  fill: #000;
+}
+
+.score{
+font-size:10px;
+
+  fill: #000;
+ 
+}
+</style>
+
+<br>
+<svg class="chart" width="960" height="800"></svg>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+  
+
+<script>
+
+var svg = d3.select("svg"),
+    margin = {top: 20, right: 20, bottom: 30, left: 250},
+    width = +svg.attr("width") - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom,
+    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+</script>
+
+<script src="draw-trace.js"></script>
+<script src="tell-trace.js"></script>
+<script src="load-trace.js"></script>
+
+<script>
+
+  TraceLoader(function(trace) {
+      var metricsMap = trace.metLib.category("trace.render").getMetricsMap();
+      var chart = new MetricsChart(g, metricsMap);
+  })
+
+</script>
+</body>
