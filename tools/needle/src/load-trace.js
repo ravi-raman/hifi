@@ -56,7 +56,8 @@ function TraceLoader(handler) {
 			"</strong> bytes</p>"
 		);
 
-		if (file.type.indexOf("application/x-gzip") == 0) {
+		if (file.type.indexOf("application/x-gzip") == 0 || 
+            file.type.indexOf("application/gzip") == 0) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
 				var zipped = new Uint8Array(e.target.result)
